@@ -4,7 +4,7 @@ Every command the loop needs, copy-paste ready. Set `OWNER`, `REPO`, `PR` first.
 The Greptile bot author login is `greptile-apps[bot]`.
 
 ```bash
-OWNER=astra-sh; REPO=qvr; PR=261
+OWNER=your-org; REPO=your-repo; PR=123
 ```
 
 ## 1. Read the review

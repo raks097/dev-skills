@@ -24,7 +24,7 @@ read review → fix findings → reply+resolve each thread → close/reopen → 
 
 1. **Read the review** — summary score, inline findings, and thread IDs:
    ```bash
-   OWNER=astra-sh REPO=qvr PR=261
+   OWNER=your-org REPO=your-repo PR=123   # set these for your PR
    # summary + score
    gh api repos/$OWNER/$REPO/issues/$PR/comments \
      --jq '[.[]|select(.user.login=="greptile-apps[bot]")]|last|.body' \

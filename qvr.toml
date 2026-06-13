@@ -1,0 +1,7 @@
+# Registry manifest — marks this repo as a qvr skills registry and scopes
+# discovery to the skills/ directory. Consumers install with:
+#   qvr registry add <url-of-this-repo>
+#   qvr add <skill-name>
+[registry]
+name = "dev-skills"
+skills-dir = "skills"
