@@ -5,7 +5,7 @@ license: MIT
 metadata:
   category: code-review
   tools: gh, git, greptile
-allowed-tools: Bash Read Edit
+allowed-tools: Bash Read Edit network env_access exec
 ---
 
 # Greptile review loop
@@ -63,12 +63,19 @@ read review → fix findings → reply+resolve each thread → close/reopen → 
    A plain push / synchronize frequently does **not** re-run Greptile; reopen
    does. Comment history survives close/reopen and force-push.
 
-5. **Poll for the new score.** Greptile **edits its summary comment in place** —
+5. **Wait for the new score.** Greptile **edits its summary comment in place** —
    same `created_at`, new `updated_at`. Polling for a *new* comment will miss it;
    key on `updated_at` (or the score text). See `scripts/poll-score.sh`:
    ```bash
    ./scripts/poll-score.sh $OWNER $REPO $PR     # waits, then prints the new score
    ```
+   **Opt-in: webhook mode** (event-driven, no busy-wait). If you can expose a
+   local port via a tunnel, run `scripts/webhook-receiver.py` and block on
+   `scripts/await-review.sh $PR $(git rev-parse HEAD)` instead of polling — it
+   wakes the instant Greptile re-reviews the exact head you pushed. Setup (tunnel,
+   `gh` webhook registration, secret) is in `references/webhook-mode.md`. Polling
+   stays the zero-infra default; webhook mode is the upgrade when latency or
+   rate-limit churn matters.
 
 6. **Done when** `Confidence Score: 5/5` **and** zero unresolved threads:
    ```bash
